@@ -4,8 +4,7 @@
 
 struct uls_timer_t ;
 
-int uls_add_timer(struct uls_timer_t * timer , unsigned long expires 
-				,unsigned long data , void (*callback)(unsigned long));
+int uls_add_timer(struct uls_timer_t * timer);
 
 
 #endif
