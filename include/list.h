@@ -1,7 +1,6 @@
 #ifndef _LINUX_LIST_H
 #define _LINUX_LIST_H
 
-
 /*
  * Simple doubly linked list implementation.
  *
@@ -11,8 +10,6 @@
  * generate better code by using them directly rather than
  * using the generic single-entry routines.
  */
-
-/********** include/linux/list.h **********/
 
 /*
  * Architectures might want to move the poison pointer offset

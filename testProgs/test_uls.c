@@ -3,7 +3,6 @@
 #include "list.h"
 #include "libuls.h"
 
-
 struct my_list{
 	int id;
 	struct list_head list;
@@ -51,6 +50,6 @@ int main( int argc , char **argv )
 	
     uls_version_print();
 
-	printf("WORD_ROUND %d WORD_TRUNC %d \n",WORD_ROUND(3) ,WORD_TRUNC(6) );
+	printf("WORD_ROUND %d WORD_TRUNC %d now %ld\n",WORD_ROUND(3) ,WORD_TRUNC(6) ,uls_time());
 	return 0;
 }
