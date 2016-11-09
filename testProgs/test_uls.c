@@ -11,6 +11,7 @@ struct my_list{
 
 int main( int argc , char **argv )
 {
+    uls_init();
 	struct my_list * tmp;
 	struct list_head *pos, *q;
 	struct my_list myList;
@@ -52,6 +53,10 @@ int main( int argc , char **argv )
 
 	printf("WORD_ROUND %d WORD_TRUNC %d now %ld\n",WORD_ROUND(3) ,WORD_TRUNC(6) ,uls_time_now());
 
-    uls_add_timer(0,0,0);
+    struct uls_timer_list timer ;
+
+    uls_setup_timer(&timer,0,0,0);
+
+    uls_add_timer(&timer);
 	return 0;
 }

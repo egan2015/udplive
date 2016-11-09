@@ -16,3 +16,8 @@ void uls_version_print()
 {
 	printf(" libuls version 1.0.0 \n");
 }
+
+void uls_init()
+{
+	INIT_LIST_HEAD(&__uls_object()->timers);
+}

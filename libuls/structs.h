@@ -3,7 +3,7 @@
 #include "list.h"
 
 struct uls_object {
-	struct list_head timelist;	
+	struct list_head timers;	
 	char name[255];
 };
 

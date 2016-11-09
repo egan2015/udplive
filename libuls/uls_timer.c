@@ -1,38 +1,31 @@
 #include "libuls.h"
 #include <sys/time.h>
 #include <pthread.h>
-#include "list.h"
 #include "structs.h"
 
-struct uls_timer_t {
-	struct list_head list ;
-	unsigned long expires;
-	unsigned long data;
-	void (*func)(unsigned long );
-};
 
-// 加入定时器
-static void uls_timer_add(struct uls_timer_t * timer);
-//检查定时器是否执行
-static int  uls_timer_panding(struct uls_timer_t * timer );
-//修改定时器
-static int  uls_timer_reset(struct uls_timer_t * timer );
-//删除定时器
-static void uls_timer_del(struct uls_timer_t * timer );
+void uls_setup_timer(struct uls_timer_list * timer ,
+					unsigned long expires ,
+					void (*func)(unsigned long ),
+					unsigned long data )
+{
+	INIT_LIST_HEAD(&timer->list);
+	timer->expires = expires;
+	timer->function = func;
+	timer->data = data;
+}
 
-timerId uls_add_timer(unsigned long expires ,
-						 void (*func)(unsigned long ),
-						  unsigned long data )
+void uls_add_timer(struct uls_timer_list * timer)
 {
 	printf("%s\n", __uls_object()->name);
-	return 0;
+	list_add_tail(&timer->list,&__uls_object()->timers);
 }
-void uls_mod_timer(timerId timer , unsigned long expires )
+void uls_mod_timer(struct uls_timer_list * timer  , unsigned long expires )
 {
 
 }
 
-void uls_del_timer( timerId timer)
+void uls_del_timer( struct uls_timer_list * timer )
 {
 
 }

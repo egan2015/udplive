@@ -2,8 +2,14 @@
 #define _ULS_TIMER_H
 
 #include <sys/time.h>
+#include "list.h"
 
-typedef unsigned long timerId ;
+struct uls_timer_list {
+	struct list_head list ;
+	unsigned long expires;
+	unsigned long data;
+	void (*function)(unsigned long );
+};
 
 
 // 获取当前时间，毫秒
@@ -15,9 +21,14 @@ static inline unsigned long uls_time_now()
 }
 
 // 创建建定时器 uls_timer.c
-timerId uls_add_timer(unsigned long expires , void (*func)(unsigned long ), unsigned long data );
-void	uls_mod_timer(timerId timer , unsigned long expires );
-void	uls_del_timer( timerId timer);
+void uls_setup_timer(struct uls_timer_list * timer ,
+					unsigned long expires ,
+					void (*func)(unsigned long ),
+					unsigned long data );
+
+void uls_add_timer(struct uls_timer_list * timer );
+void uls_mod_timer(struct uls_timer_list * timer , unsigned long expires );
+void uls_del_timer(struct uls_timer_list * timer);
 
 
 #endif
