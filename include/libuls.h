@@ -8,7 +8,8 @@
 #define WORD_TRUNC(s) ((s)&~3)
 
 
+void uls_init();
 void uls_version_print();
-
+void uls_uninit();
 
 #endif
