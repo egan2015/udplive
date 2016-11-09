@@ -27,10 +27,10 @@ int main( int argc , char **argv )
     	sprintf(tmp->name,"list add tail %d",tmp->id);
     	list_add_tail(&(tmp->list),&myList.list);
     }
-        printf("head id= %d name = %s\n", 
-        list_entry(myList.list.next,struct my_list,list)->id,list_entry(myList.list.next,struct my_list,list)->name); 
+    printf("head id= %d name = %s\n", 
+    list_entry(myList.list.next,struct my_list,list)->id,list_entry(myList.list.next,struct my_list,list)->name); 
     printf("tail id= %d name = %s\n", 
-        list_entry(myList.list.prev,struct my_list,list)->id,list_entry(myList.list.prev,struct my_list,list)->name); 
+    list_entry(myList.list.prev,struct my_list,list)->id,list_entry(myList.list.prev,struct my_list,list)->name); 
 
     printf("using list_for_each\n");
     list_for_each(pos,&myList.list){
@@ -50,6 +50,6 @@ int main( int argc , char **argv )
 	
     uls_version_print();
 
-	printf("WORD_ROUND %d WORD_TRUNC %d now %ld\n",WORD_ROUND(3) ,WORD_TRUNC(6) ,uls_time());
+	printf("WORD_ROUND %d WORD_TRUNC %d now %ld\n",WORD_ROUND(3) ,WORD_TRUNC(6) ,uls_time_now());
 	return 0;
 }
