@@ -51,5 +51,7 @@ int main( int argc , char **argv )
     uls_version_print();
 
 	printf("WORD_ROUND %d WORD_TRUNC %d now %ld\n",WORD_ROUND(3) ,WORD_TRUNC(6) ,uls_time_now());
+
+    uls_add_timer(0,0,0);
 	return 0;
 }
