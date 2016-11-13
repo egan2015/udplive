@@ -56,7 +56,7 @@ int main( int argc , char **argv )
     struct uls_timer_list timer ;
 
     uls_setup_timer(&timer,0,0,0);
-
+    timer.expires = uls_time_now() + 100;
     uls_add_timer(&timer);
 	return 0;
 }

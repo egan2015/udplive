@@ -17,8 +17,8 @@ void uls_setup_timer(struct uls_timer_list * timer ,
 
 void uls_add_timer(struct uls_timer_list * timer)
 {
-	printf("%s\n", __uls_object()->name);
-	list_add_tail(&timer->list,&__uls_object()->timers);
+	printf("%s :timeout :%ld\n", __uls_private_data()->name,timer->expires);
+	list_add_tail(&timer->list,&__uls_private_data()->timers);
 }
 void uls_mod_timer(struct uls_timer_list * timer  , unsigned long expires )
 {

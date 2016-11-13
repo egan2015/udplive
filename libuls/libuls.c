@@ -3,13 +3,13 @@
 #include "libuls.h"
 #include "structs.h"
 
-struct uls_object instance = {
+static struct uls_private_data_t private_data = {
 	.name = "uls Instance"
 };
 
-struct uls_object * __uls_object(){
+struct uls_private_data_t * __uls_private_data(){
 
-	return &instance; 
+	return &private_data; 
 }
 
 void uls_version_print()
@@ -19,5 +19,5 @@ void uls_version_print()
 
 void uls_init()
 {
-	INIT_LIST_HEAD(&__uls_object()->timers);
+	INIT_LIST_HEAD(&__uls_private_data()->timers);
 }
