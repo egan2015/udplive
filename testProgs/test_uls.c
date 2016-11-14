@@ -9,10 +9,14 @@ struct my_list{
 	char name[255];
 };
 
+void timout_event( unsigned long data ){
+
+    printf(" timer %ld timeout %ld\n", data , uls_time_now());
+}
+
 int main( int argc , char **argv )
 {
-    uls_init();
-	struct my_list * tmp;
+ 	struct my_list * tmp;
 	struct list_head *pos, *q;
 	struct my_list myList;
 	INIT_LIST_HEAD(&myList.list);
@@ -53,10 +57,15 @@ int main( int argc , char **argv )
 
 	printf("WORD_ROUND %d WORD_TRUNC %d now %ld\n",WORD_ROUND(3) ,WORD_TRUNC(6) ,uls_time_now());
 
-    struct uls_timer_list timer ;
+    struct timer_list timer[4] ;
+    for ( int i = 0 ; i < 4 ; ++i ){
+        setup_timer(&timer[i],uls_time_now() + (i+1) * 500 ,timout_event,i);
+        add_timer(&timer[i]);
+    }
+    list_all_timer();
+    printf("next timer %ld\n", get_next_timer_msecs(uls_time_now()));
 
-    uls_setup_timer(&timer,0,0,0);
-    timer.expires = uls_time_now() + 100;
-    uls_add_timer(&timer);
+    while(1)
+     uls_run_loop();
 	return 0;
 }

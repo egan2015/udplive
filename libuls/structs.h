@@ -3,7 +3,7 @@
 #include "list.h"
 
 struct uls_private_data_t {
-	struct list_head timers;	
+	struct list_head timer_list;	
 	char name[255];
 };
 

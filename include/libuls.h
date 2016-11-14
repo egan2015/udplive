@@ -7,9 +7,9 @@
 /* Truncate to the previous multiple of 4.  */
 #define WORD_TRUNC(s) ((s)&~3)
 
-
-void uls_init();
 void uls_version_print();
-void uls_uninit();
+
+void uls_run_loop();
+
 
 #endif
