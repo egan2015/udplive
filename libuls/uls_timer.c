@@ -66,13 +66,14 @@ void dispatch_timer()
 
 unsigned long get_next_timer_msecs( unsigned long now )
 {
-	unsigned long expires = 1000;
+	long expires = 1000;
 	struct timer_list * head ;
 	if (list_empty(&__timer_sys.timer_list))
 		return 1000;
 	head = list_first_entry(&__timer_sys.timer_list,struct timer_list , entry );
 
-	return head->expires - now;
+	expires = (head->expires - now) - 5;
+	return  expires > 0 ? expires : 0 ;
 }	
 
 void setup_timer(struct timer_list * timer ,

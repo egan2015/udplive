@@ -59,12 +59,12 @@ int main( int argc , char **argv )
 
     struct timer_list timer[4] ;
     for ( int i = 0 ; i < 4 ; ++i ){
-        setup_timer(&timer[i],uls_time_now() + (i+1) * 500 ,timout_event,i);
+        setup_timer(&timer[i],uls_time_now() + (i+1) * 300 ,timout_event,i);
         add_timer(&timer[i]);
     }
-    list_all_timer();
     printf("next timer %ld\n", get_next_timer_msecs(uls_time_now()));
-
+    printf("mod_timer : %d \n",mod_timer(&timer[2],uls_time_now()+10000));
+    list_all_timer();
     while(1)
      uls_run_loop();
 	return 0;
