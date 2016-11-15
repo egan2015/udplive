@@ -1,4 +1,5 @@
 include_directories(${PROJECT_SOURCE_DIR}/include)
 set(LIB_SRC libuls.c uls_timer.c)
 add_library(uls SHARED ${LIB_SRC})
+target_link_libraries(uls pthread )
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)

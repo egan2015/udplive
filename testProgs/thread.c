@@ -13,6 +13,12 @@ void *test_func(void *arg)
 	return NULL;
 }
 
+typedef struct my_struct{
+	uint8_t		type1;
+	uint16_t	type2;
+	uint32_t	type3;
+} __attribute__((packed)) mydata;
+
 int main(int argc, const char *argv[])
 {
 	pthread_t id[20];
@@ -26,6 +32,6 @@ int main(int argc, const char *argv[])
 			pthread_join(id[i],NULL);
 	}
 
-	printf("%d\n",count);
+	printf("%d :: %d\n",count,sizeof(mydata));
 	return 0;
 }

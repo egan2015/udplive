@@ -6,6 +6,7 @@
 #include <sys/time.h>
 #include <sys/socket.h>
 #include <sys/select.h>
+#include <pthread.h>
 
 #include "libuls.h"
 #include "structs.h"
@@ -23,9 +24,20 @@ struct uls_private_data_t * __uls_private_data(){
 	return &private_data; 
 }
 
+uls_atomic_t uls_atomic_inc( uls_atomic_t * value)
+{
+	return __sync_add_and_fetch(value,1);
+}
+
+uls_atomic_t uls_atomic_dec_and_test(uls_atomic_t * value)
+{
+	return __sync_sub_and_fetch(value,1);
+}
+
+
 void uls_version_print()
 {
-	printf(" libuls version 1.0.0 \n");
+	printf("%s ::%d\n",ULS_VERSION,sizeof(uls_chunkhdr_t));
 }
 
 void __uls_init()
