@@ -11,6 +11,8 @@ struct my_list{
 
 uls_atomic_t refcnt = 0; 
 
+#define get_entry( ptr , TYPE ) \
+    (TYPE*)(ptr);
 void timout_event( unsigned long data ){
 
     printf(" timer %ld timeout %ld\n", data , uls_time_now());
@@ -18,9 +20,10 @@ void timout_event( unsigned long data ){
 
 int main( int argc , char **argv )
 {
- 	struct my_list * tmp;
+ 	struct my_list * tmp,*tmp1;
 	struct list_head *pos, *q;
 	struct my_list myList;
+    void *voidtype = NULL;
 	INIT_LIST_HEAD(&myList.list);
     for ( int i = 0 ; i < 5; i++ ){
     	tmp = (struct my_list*)malloc(sizeof(struct my_list));
@@ -36,6 +39,10 @@ int main( int argc , char **argv )
 			list_add_tail(&(tmp->list),&myList.list);
 			uls_atomic_inc(&refcnt);
         }
+    voidtype = tmp;
+    tmp1 = get_entry(voidtype,struct my_list);
+
+    printf("get entry %d\n", tmp1->id );
     printf("head id= %d name = %s\n", 
 		list_entry(myList.list.next,struct my_list,list)->id,
 		list_entry(myList.list.next,struct my_list,list)->name); 
@@ -78,6 +85,9 @@ int main( int argc , char **argv )
 					timout_event,i);
         add_timer(&timer[i]);
     }
+    unsigned short seq1 = 65535;
+    unsigned short seq2 = seq1+1;
+    printf(" seq1 = %d loss %d\n", seq2, (short)(seq2 - seq1));
     printf("next timer %ld\n", get_next_timer_msecs(uls_time_now()));
     printf("mod_timer : %d \n",mod_timer(&timer[2],uls_time_now()+10000));
     list_all_timer();

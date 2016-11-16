@@ -59,6 +59,6 @@ void uls_run_loop()
 	tv.tv_sec = ( ms / 1000 );
 	tv.tv_usec = ( ms % 1000 ) * 1000;
 	ret = select(0,NULL,NULL,NULL,&tv);
-	//if (ret == 0)
+	if (ret == 0)
 		dispatch_timer();
 }
