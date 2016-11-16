@@ -37,7 +37,7 @@ uls_atomic_t uls_atomic_dec_and_test(uls_atomic_t * value)
 
 void uls_version_print()
 {
-	printf("%s ::%d\n",ULS_VERSION,sizeof(uls_chunkhdr_t));
+	printf("%s ::%d\n",ULS_VERSION,sizeof(rstp_chunkhdr_t));
 }
 
 void __uls_init()
