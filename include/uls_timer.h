@@ -19,7 +19,7 @@ struct timer_list {
 
 // 获取当前时间，毫秒
 static inline 
-unsigned long uls_time_now()
+unsigned long mtime()
 {
     struct timeval tv;
     gettimeofday(&tv,0);
@@ -38,7 +38,6 @@ int timer_panding( const struct timer_list * timer ){
 }
 // 创建建定时器 uls_timer.c
 void setup_timer(struct timer_list * timer ,
-					unsigned long expires ,
 					void (*func)(unsigned long ),
 					unsigned long data );
 
@@ -46,7 +45,7 @@ void add_timer(struct timer_list * timer );
 int  mod_timer(struct timer_list * timer , unsigned long expires );
 void del_timer(struct timer_list * timer);
 
-unsigned long get_next_timer_msecs( unsigned long now );
+unsigned long timer_next_msecs( unsigned long now );
 void dispatch_timer();
 void list_all_timer();
 

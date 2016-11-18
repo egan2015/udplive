@@ -16,7 +16,7 @@ uls_atomic_t refcnt = 0;
     (TYPE*)(ptr);
 void timout_event( unsigned long data ){
 
-    printf(" timer %ld timeout %ld\n", data , uls_time_now());
+    printf(" timer %ld timeout %ld\n", data , mtime());
 }
 
 static
@@ -144,20 +144,20 @@ int main( int argc , char **argv )
 	printf("WORD_ROUND %d WORD_TRUNC %d now %ld\n",
 			WORD_ROUND(3) ,
 			WORD_TRUNC(6) ,
-			uls_time_now());
+			mtime());
 
     struct timer_list timer[4] ;
     for ( int i = 0 ; i < 4 ; ++i ){
+        timer[i].expires = mtime() + (i+1) * 300 ;
         setup_timer(&timer[i],
-					uls_time_now() + (i+1) * 300 ,
 					timout_event,i);
         add_timer(&timer[i]);
     }
     unsigned short seq1 = 65535;
     unsigned short seq2 = seq1+1;
     printf(" seq1 = %d loss %d\n", seq2, (short)(seq2 - seq1));
-    printf("next timer %ld\n", get_next_timer_msecs(uls_time_now()));
-    printf("mod_timer : %d \n",mod_timer(&timer[2],uls_time_now()+10000));
+    printf("next timer %ld\n", timer_next_msecs(mtime()));
+    printf("mod_timer : %d \n",mod_timer(&timer[2],mtime()+10000));
     list_all_timer();
 
     while(1)

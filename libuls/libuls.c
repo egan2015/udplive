@@ -55,7 +55,7 @@ void uls_run_loop()
 {
 	struct timeval tv;
 	int ret;
-	unsigned long ms = get_next_timer_msecs( uls_time_now() );
+	unsigned long ms = timer_next_msecs( mtime() );
 	tv.tv_sec = ( ms / 1000 );
 	tv.tv_usec = ( ms % 1000 ) * 1000;
 	ret = select(0,NULL,NULL,NULL,&tv);

@@ -54,7 +54,7 @@ void list_all_timer()
 void dispatch_timer()
 {
 	struct timer_list * timer ,*timer1;
-	unsigned long now = uls_time_now(); 
+	unsigned long now = mtime(); 
 	struct list_head * head = &__timer_sys.timer_list;
 	list_for_each_entry_safe(timer , timer1 , head , entry ){
 		if ( time_after_eq( now , timer->expires)){
@@ -64,7 +64,7 @@ void dispatch_timer()
 	} 
 }
 
-unsigned long get_next_timer_msecs( unsigned long now )
+unsigned long timer_next_msecs( unsigned long now )
 {
 	long expires = 1000;
 	struct timer_list * head ;
@@ -77,12 +77,10 @@ unsigned long get_next_timer_msecs( unsigned long now )
 }	
 
 void setup_timer(struct timer_list * timer ,
-					unsigned long expires ,
 					void (*func)(unsigned long ),
 					unsigned long data )
 {
 	init_timer(timer);
-	timer->expires = expires;
 	timer->function = func;
 	timer->data = data;
 }
