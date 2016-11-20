@@ -14,6 +14,7 @@ uls_atomic_t refcnt = 0;
 
 #define get_entry( ptr , TYPE ) \
     (TYPE*)(ptr);
+
 void timout_event( unsigned long data ){
 
     printf(" timer %ld timeout %ld\n", data , mtime());
@@ -115,7 +116,7 @@ void test_linux_list_General()
         printf("delete id= %d name = %s \n",
                 tmp->id,tmp->name);
         list_del(pos);
-        free(pos);
+        free(list_entry(pos,struct list_node,list));
         //free(tmp);
     }
     
@@ -125,13 +126,13 @@ void test_linux_list_General()
         printf("delete id= %d name = %s \n",
                 tmp->id,tmp->name);
         list_del(pos);
-        free(pos);
+        free(list_entry(pos,struct list_node,list));
         free(tmp);
     }
     if(list_empty(&head))
-          printf("now the head if empty \n");
+      printf("now the head if empty \n");
     if ( list_empty(&head1))
-          printf("now the head1 if empty \n");
+      printf("now the head1 if empty \n");
 
 }
 
@@ -155,10 +156,9 @@ int main( int argc , char **argv )
     }
     unsigned short seq1 = 65535;
     unsigned short seq2 = seq1+1;
-    printf(" seq1 = %d loss %d\n", seq2, (short)(seq2 - seq1));
+    printf(" seq1 = %d loss %d  hash and %d\n", seq2, (short)(seq2 - seq1), 30 & 31);
     printf("next timer %ld\n", timer_next_msecs(mtime()));
     printf("mod_timer : %d \n",mod_timer(&timer[2],mtime()+10000));
-    list_all_timer();
 
     while(1)
      uls_run_loop();
