@@ -9,12 +9,10 @@
 #define ULS_VERSION "ULS-0.0.1"
 
 typedef unsigned long uls_atomic_t ;
+
 uls_atomic_t uls_atomic_inc( uls_atomic_t * );
 uls_atomic_t uls_atomic_dec_and_test(uls_atomic_t * );
-
-
 void uls_version_print();
 void uls_run_loop();
-
 
 #endif
