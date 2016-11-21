@@ -11,7 +11,6 @@
 #include "libuls.h"
 #include "structs.h"
 
-
 static struct uls_private_data_t private_data = {
 	.name = "uls Instance"
 };
@@ -33,7 +32,6 @@ uls_atomic_t uls_atomic_dec_and_test(uls_atomic_t * value)
 {
 	return __sync_sub_and_fetch(value, 1);
 }
-
 
 void uls_version_print()
 {
