@@ -17,7 +17,7 @@ struct timer_list {
 #define time_after_eq(a,b) ((long)(a) - (long)(b) >= 0)
 #define time_before_eq(a,b) time_after_eq(b,a)
 
-// 获取当前时间，毫秒
+/* 获取当前时间，毫秒*/
 static inline
 unsigned long mtime()
 {
@@ -36,7 +36,7 @@ static inline
 int timer_panding( const struct timer_list * timer ) {
 	return timer->entry.next != NULL;
 }
-// 创建建定时器 uls_timer.c
+/* 创建建定时器 uls_timer.c */
 void setup_timer(struct timer_list * timer ,
                  void (*func)(unsigned long ),
                  unsigned long data );

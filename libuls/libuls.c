@@ -15,8 +15,14 @@ static struct uls_private_data_t private_data = {
 	.name = "uls Instance"
 };
 
-void __uls_init(void) __attribute__((constructor)); //告诉gcc把这个函数扔到init section
-void __uls_fini(void) __attribute__((destructor));  //告诉gcc把这个函数扔到fini section
+/**
+ * 告诉gcc把这个函数扔到init section
+ */
+void __uls_init(void) __attribute__((constructor));
+/**
+ * 告诉gcc把这个函数扔到fini section
+ */
+void __uls_fini(void) __attribute__((destructor));
 
 struct uls_private_data_t * __uls_private_data() {
 

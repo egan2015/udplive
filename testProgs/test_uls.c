@@ -16,7 +16,6 @@ uls_atomic_t refcnt = 0;
     (TYPE*)(ptr);
 
 void timout_event( unsigned long data ) {
-
     printf(" timer %ld timeout %ld\n", data , mtime());
 }
 
@@ -135,11 +134,12 @@ void test_linux_list_General()
     if ( list_empty(&head1))
         printf("now the head1 if empty \n");
 
+
 }
 
 int main( int argc , char **argv )
 {
-//    test_linux_list();
+//  test_linux_list();
     test_linux_list_General();
     uls_version_print();
 
@@ -157,7 +157,7 @@ int main( int argc , char **argv )
     }
     unsigned short seq1 = 65535;
     unsigned short seq2 = seq1 + 1;
-    printf(" seq1 = %d loss %d  hash and %d\n", seq2, (short)(seq2 - seq1), 30 & 31);
+    printf("seq1 = %d loss %d  hash and %d\n", seq2, (short)(seq2 - seq1), 30 & 31);
     printf("next timer %ld\n", timer_next_msecs(mtime()));
     printf("mod_timer : %d \n", mod_timer(&timer[2], mtime() + 10000));
 
