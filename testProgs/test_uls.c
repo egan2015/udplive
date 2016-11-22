@@ -9,7 +9,6 @@ struct my_list {
     char name[255];
 };
 
-
 uls_atomic_t refcnt = 0;
 
 #define get_entry( ptr , TYPE ) \
@@ -96,13 +95,12 @@ void test_linux_list_General()
     };
     struct mydata * tmp;
     struct list_head *pos, *q;
-
     struct list_head head, head1;
 
     INIT_LIST_HEAD(&head);
     INIT_LIST_HEAD(&head1);
     for ( int i = 0 ; i < 5 ; i++ ) {
-        struct mydata * data = malloc( sizeof( struct mydata));
+        struct mydata * data = malloc( sizeof ( struct mydata) );
         data->id = i;
         sprintf(data->name, "name:%d", i);
         struct list_node * node;
