@@ -22,6 +22,7 @@ void timout_event( unsigned long data ) {
 static
 void test_linux_list()
 {
+
     struct my_list * tmp, *tmp1;
     struct list_head *pos, *q;
     struct my_list myList;
@@ -133,7 +134,6 @@ void test_linux_list_General()
         printf("now the head if empty \n");
     if ( list_empty(&head1))
         printf("now the head1 if empty \n");
-
 
 }
 

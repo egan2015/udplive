@@ -9,16 +9,14 @@ struct uls_private_data_t {
 	char name[255];
 };
 
-typedef
-struct rstp_hdr {
+typedef struct rstp_hdr {
 	uint16_t	source;		/*source port*/
 	uint16_t	dest;		/*dest port*/
 	uint32_t	vtag;
 	uint32_t	checksum;
 } __attribute__((packed))	rstp_hdr_t;
 
-typedef
-struct rstp_chunkhdr {
+typedef struct rstp_chunkhdr {
 	uint8_t		type;
 	uint8_t		flags;
 	uint16_t	length;
