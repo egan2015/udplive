@@ -21,7 +21,6 @@ void timout_event( unsigned long data ) {
 static
 void test_linux_list()
 {
-
     struct my_list * tmp, *tmp1;
     struct list_head *pos, *q;
     struct my_list myList;
@@ -135,12 +134,13 @@ void test_linux_list_General()
 
 }
 
+
 int main( int argc , char **argv )
 {
 //  test_linux_list();
     test_linux_list_General();
     uls_version_print();
-    
+
     printf("WORD_ROUND %d WORD_TRUNC %d now %ld\n",
            WORD_ROUND(3) ,
            WORD_TRUNC(6) ,

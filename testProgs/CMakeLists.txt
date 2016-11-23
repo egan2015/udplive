@@ -9,3 +9,6 @@ target_link_libraries(test_uls uls )
 set(THREAD_SRC thread.c)
 add_executable(thread ${THREAD_SRC})
 target_link_libraries(thread pthread )
+
+set(HASH_SRC hash.c)
+add_executable(hash ${HASH_SRC})

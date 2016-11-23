@@ -11,7 +11,6 @@ struct timer_sys
 	.inited = 0,
 };
 
-
 static inline
 void detach_timer( struct timer_list * timer )
 {
@@ -39,7 +38,6 @@ void internal_add_timer(struct list_head * head , struct list_head * new )
 	if (!done)
 		list_add_tail(new , head );
 }
-
 
 void dispatch_timer()
 {
