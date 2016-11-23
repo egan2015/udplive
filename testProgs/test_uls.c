@@ -105,6 +105,7 @@ void test_linux_list_General()
         struct list_node * node;
         LIST_ADD_NODE( data, head, node);
         LIST_ADD_NODE( data, head1, node);
+
     }
 
     printf("deleting the head using list_for_each_safe\n");
@@ -133,7 +134,6 @@ void test_linux_list_General()
         printf("now the head1 if empty \n");
 
 }
-
 
 int main( int argc , char **argv )
 {
