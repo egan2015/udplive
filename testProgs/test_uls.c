@@ -155,7 +155,8 @@ int main( int argc , char **argv )
     }
     unsigned short seq1 = 65535;
     unsigned short seq2 = seq1 + 1;
-    printf("seq1 = %d loss %d  hash and %d\n", seq2, (short)(seq2 - seq1), 30 & 31);
+    printf("seq1 = %d loss %d  hash and %d\n", seq2,
+           (short)(seq2 - seq1), 30 & 31);
     printf("next timer %ld\n", timer_next_msecs(mtime()));
     printf("mod_timer : %d \n", mod_timer(&timer[2], mtime() + 10000));
 
