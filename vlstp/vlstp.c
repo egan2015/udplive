@@ -34,7 +34,7 @@ atomic_t vlstp_atomic_dec(atomic_t * value)
 
 void vlstp_version_print()
 {
-	printf("%s ::%d\n", VLSTP_VERSION, sizeof(rstp_chunkhdr_t));
+	printf("%s\n", VLSTP_VERSION);
 }
 
 void __vlstp_init()

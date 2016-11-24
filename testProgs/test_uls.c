@@ -9,7 +9,6 @@ struct my_list {
     char name[255];
 };
 
-
 #define get_entry( ptr , TYPE ) \
     (TYPE*)(ptr);
 
@@ -18,7 +17,6 @@ struct timer_list timer[4] ;
 void timout_event( unsigned long data ) {
     printf(" timer %ld timeout %ld\n", data , mtime());
 }
-
 
 #define LIST_NEW_NODE( ptr , node ) \
     node = malloc( sizeof ( struct list_node)); node->data = ptr;
@@ -75,7 +73,6 @@ void test_linux_list_General()
         printf("now the head if empty \n");
     if ( list_empty(&head1))
         printf("now the head1 if empty \n");
-
 }
 
 int main( int argc , char **argv )
