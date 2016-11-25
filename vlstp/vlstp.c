@@ -22,19 +22,14 @@ void __vlstp_init(void) __attribute__((constructor));
 void __vlstp_fini(void) __attribute__((destructor));
 
 
-atomic_t vlstp_atomic_inc( atomic_t * value)
+vlstp_atomic_t vlstp_atomic_inc( vlstp_atomic_t * value)
 {
 	return __sync_add_and_fetch(value, 1);
 }
 
-atomic_t vlstp_atomic_dec(atomic_t * value)
+vlstp_atomic_t vlstp_atomic_dec(vlstp_atomic_t * value)
 {
 	return __sync_sub_and_fetch(value, 1);
-}
-
-void vlstp_version_print()
-{
-	printf("%s\n", VLSTP_VERSION);
 }
 
 void __vlstp_init()
@@ -47,7 +42,7 @@ void __vlstp_fini()
 	printf("vlstp library fini\n");
 }
 
-void vlstp_run()
+void vlstp_dispatch_event()
 {
 	struct timeval tv;
 	int ret;

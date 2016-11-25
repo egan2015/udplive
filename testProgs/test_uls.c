@@ -78,7 +78,6 @@ void test_linux_list_General()
 int main( int argc , char **argv )
 {
     test_linux_list_General();
-    vlstp_version_print();
 
     printf("WORD_ROUND %d WORD_TRUNC %d now %ld\n",
            WORD_ROUND(3) ,
@@ -99,6 +98,6 @@ int main( int argc , char **argv )
     printf("mod_timer : %d \n", mod_timer(&timer[3], mtime() + 10000));
 
     while (1)
-        vlstp_run();
+        vlstp_dispatch_event();
     return 0;
 }

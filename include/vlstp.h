@@ -6,15 +6,20 @@
 #define WORD_ROUND(s) (((s)+3)&~3)
 /* Truncate to the previous multiple of 4.  */
 #define WORD_TRUNC(s) ((s)&~3)
-#define VLSTP_VERSION "VLSTP-0.0.1"
 
-typedef unsigned long atomic_t ;
+typedef unsigned long vlstp_atomic_t ;
+/**
+ * 初始化 vlstp ,并创建对象实例
+ * return 成功 0 ， 失败 -1;
+ */
+int vlstp_initialize();
 
-atomic_t vlstp_atomic_inc( atomic_t * );
-atomic_t vlstp_atomic_dec(atomic_t * );
+/* 原子操作，用于对象引用计数器 */
+vlstp_atomic_t vlstp_atomic_inc(vlstp_atomic_t * );
+vlstp_atomic_t vlstp_atomic_dec(vlstp_atomic_t * );
 
-void vlstp_version_print();
-void vlstp_run();
+/* 执行系统调度，分配系统事件*/
+void vlstp_dispatch_event();
 
 #endif
 
