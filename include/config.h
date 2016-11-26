@@ -1,0 +1,1 @@
+#define CONFIG_BIT_PRE_LONG 32

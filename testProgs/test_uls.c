@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include "list.h"
 #include "vlstp.h"
-
+#include "bitops.h"
+#include "bitmap.h"
 struct my_list {
     int id;
     struct list_head list;
@@ -15,7 +16,7 @@ struct my_list {
 struct timer_list timer[4] ;
 
 void timout_event( unsigned long data ) {
-    printf(" timer %ld timeout %ld\n", data , mtime());
+    printf(" timer %lu timeout %lu\n", data , mtime());
 }
 
 #define LIST_NEW_NODE( ptr , node ) \
@@ -75,13 +76,44 @@ void test_linux_list_General()
         printf("now the head1 if empty \n");
 }
 
+static void print_bit(unsigned long *addr , unsigned long size )
+{
+    char * buf = malloc ( size );
+    char * ptr = buf + size - 1;
+    buf[size] = '\0';
+    for ( int i = 0 ;  i < size ; i++ , ptr--)
+        if (test_bit(i, addr))
+            *ptr = 0x31 ;
+        else
+            *ptr = 0x30;
+    printf("%s\n", buf);
+}
 int main( int argc , char **argv )
 {
-    test_linux_list_General();
+    //test_linux_list_General();
 
-    printf("WORD_ROUND %d WORD_TRUNC %d now %ld\n",
-           WORD_ROUND(3) ,
-           WORD_TRUNC(6) ,
+    unsigned long addr[4], start;
+    unsigned long zero_bit;
+    memset(addr, 0, sizeof( addr ) );
+
+    set_bit(30, addr);
+    set_bit(31, addr);
+    set_bit(32, addr);
+    set_bit(33, addr);
+
+    for ( int i = 0 ; i < 4; i++)
+        print_bit(&addr[i], BITS_PER_LONG);
+    start = find_next_bit(addr, BITS_PER_LONG * 4 , 0 );
+    zero_bit = find_first_zero_bit(addr, BITS_PER_LONG * 4);
+    printf("next bit %lu,next zero bit %lu first zero_bit %lu\n",
+           start,
+           find_next_zero_bit(addr, BITS_PER_LONG * 4, start ),
+           zero_bit);
+
+
+    printf("tsn_le %d tsn_lte %d now %lu\n",
+           TSN_lt(5, 6) ,
+           TSN_lte(5, 6) ,
            mtime());
 
     for ( int i = 0 ; i < 4 ; ++i ) {
@@ -94,7 +126,7 @@ int main( int argc , char **argv )
     unsigned short seq2 = seq1 + 1;
     printf("seq1 = %d loss %d  hash and %d\n", seq2,
            (short)(seq2 - seq1), 30 & 31);
-    printf("time now %ld next timer %ld\n", mtime(), timer_next_msecs(mtime()));
+    printf("time now %lu next timer %lu\n", mtime(), timer_next_msecs(mtime()));
     printf("mod_timer : %d \n", mod_timer(&timer[3], mtime() + 10000));
 
     while (1)

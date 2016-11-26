@@ -1,0 +1,1 @@
+#cmakedefine CONFIG_BIT_PRE_LONG ${CONFIG_BIT_PRE_LONG}

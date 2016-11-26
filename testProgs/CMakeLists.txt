@@ -12,3 +12,7 @@ target_link_libraries(thread pthread )
 
 set(HASH_SRC hash.c)
 add_executable(hash ${HASH_SRC})
+
+set(TEST_TSNMAP_SRC test_tsnmap.c)
+add_executable(test_tsnmap ${TEST_TSNMAP_SRC})
+target_link_libraries(test_tsnmap vlstp )
