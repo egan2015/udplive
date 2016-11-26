@@ -322,7 +322,8 @@ again:
  *
  * The bit positions 0 through @bits are valid positions in @buf.
  */
-static int bitmap_pos_to_ord(const unsigned long *buf, unsigned int pos, unsigned int nbits)
+static int bitmap_pos_to_ord(const unsigned long *buf, unsigned int pos,
+                             unsigned int nbits)
 {
   if (pos >= nbits || !test_bit(pos, buf))
     return -1;
@@ -348,7 +349,8 @@ static int bitmap_pos_to_ord(const unsigned long *buf, unsigned int pos, unsigne
  *
  * The bit positions 0 through @nbits-1 are valid positions in @buf.
  */
-unsigned int bitmap_ord_to_pos(const unsigned long *buf, unsigned int ord, unsigned int nbits)
+unsigned int bitmap_ord_to_pos(const unsigned long *buf, unsigned int ord,
+                               unsigned int nbits)
 {
   unsigned int pos;
 

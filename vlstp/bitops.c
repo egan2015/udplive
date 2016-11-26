@@ -80,7 +80,9 @@ static inline unsigned long __fls(unsigned long word)
  * is XORed with each fetched word before searching it for one bits.
  */
 static unsigned long _find_next_bit(const unsigned long *addr,
-                                    unsigned long nbits, unsigned long start, unsigned long invert)
+                                    unsigned long nbits,
+                                    unsigned long start,
+                                    unsigned long invert)
 {
   unsigned long tmp;
 
