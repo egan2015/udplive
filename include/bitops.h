@@ -1,11 +1,12 @@
 #ifndef __bitops_h__
 #define __bitops_h__
-
+#include "config.h"
 #define __ALIGN_MASK(x,mask)    (((x)+(mask))&~(mask))
 #define ALIGN(x,a)      __ALIGN_MASK(x,(typeof(x))(a)-1)
 
 #define BITS_PER_BYTE   8
-#define BITS_PER_LONG   32
+
+#define BITS_PER_LONG   CONFIG_BIT_PRE_LONG
 
 #define BIT(nr)     (1UL << (nr))
 #define BIT_ULL(nr)   (1ULL << (nr))

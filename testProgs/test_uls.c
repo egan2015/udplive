@@ -100,26 +100,27 @@ int main( int argc , char **argv )
     set_bit(31, addr);
     set_bit(32, addr);
     set_bit(33, addr);
+    set_bit(63, addr);
 
+#if CONFIG_BIT_PRE_LONG==64
+    printf("63%s0\n", "<------------------------------------------------------------");
+#else
+    printf("31%28s0\n", "<----------------------------");
+#endif
     for ( int i = 0 ; i < 4; i++)
         print_bit(&addr[i], BITS_PER_LONG);
+    printf("bitmap weight :%d\n", bitmap_weight(addr, 128));
     start = find_next_bit(addr, BITS_PER_LONG * 4 , 0 );
     zero_bit = find_first_zero_bit(addr, BITS_PER_LONG * 4);
     printf("next bit %lu,next zero bit %lu first zero_bit %lu\n",
-           start,
-           find_next_zero_bit(addr, BITS_PER_LONG * 4, start ),
+           start, find_next_zero_bit(addr, BITS_PER_LONG * 4, start ),
            zero_bit);
 
-
-    printf("tsn_le %d tsn_lte %d now %lu\n",
-           TSN_lt(5, 6) ,
-           TSN_lte(5, 6) ,
-           mtime());
+    printf("tsn_le %d tsn_lte %d now %lu\n", TSN_lt(5, 6) , TSN_lte(5, 6) , mtime());
 
     for ( int i = 0 ; i < 4 ; ++i ) {
         timer[i].expires = mtime() + (i + 1) * 1000 ;
-        setup_timer(&timer[i],
-                    timout_event, i);
+        setup_timer(&timer[i], timout_event, i);
         add_timer(&timer[i]);
     }
     unsigned short seq1 = 65535;
