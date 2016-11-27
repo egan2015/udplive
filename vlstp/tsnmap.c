@@ -23,10 +23,10 @@ struct vlstp_tsnmap *vlstp_tsnmap_init(struct vlstp_tsnmap *map, uint16_t len,
   }
 
   /* Keep track of TSNs represented by tsn_map.  */
-  map->base_tsn = initial_tsn;
+  map->base_tsn                 = initial_tsn;
   map->cumulative_tsn_ack_point = initial_tsn - 1;
-  map->max_tsn_seen = map->cumulative_tsn_ack_point;
-  map->num_dup_tsns = 0;
+  map->max_tsn_seen             = map->cumulative_tsn_ack_point;
+  map->num_dup_tsns             = 0;
 
   return map;
 }
@@ -219,8 +219,8 @@ static void vlstp_tsnmap_update(struct vlstp_tsnmap *map)
  */
 uint16_t vlstp_tsnmap_pending(struct vlstp_tsnmap *map)
 {
-  uint32_t cum_tsn = map->cumulative_tsn_ack_point;
-  uint32_t max_tsn = map->max_tsn_seen;
+  uint32_t cum_tsn  = map->cumulative_tsn_ack_point;
+  uint32_t max_tsn  = map->max_tsn_seen;
   uint32_t base_tsn = map->base_tsn;
   uint16_t pending_data;
   uint32_t gap;

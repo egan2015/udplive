@@ -6,12 +6,13 @@
 #include <sys/time.h>
 #include <sys/socket.h>
 #include <sys/select.h>
+#include <sys/poll.h>
 #include <pthread.h>
 
 #include "vlstp.h"
 #include "structs.h"
 
-
+#define _SOCKET_POLL_ 0
 /**
  * 告诉gcc把这个函数扔到init section
  */
@@ -44,12 +45,16 @@ void __vlstp_fini()
 
 void vlstp_dispatch_event()
 {
-	struct timeval tv;
 	int ret;
 	unsigned long ms = timer_next_msecs( mtime() );
+#if _SOCKET_POLL_
+	ret = poll(NULL, 0, ms);
+#else
+	struct timeval tv;
 	tv.tv_sec = ( ms / 1000 );
 	tv.tv_usec = ( ms % 1000 ) * 1000;
 	ret = select(0, NULL, NULL, NULL, &tv);
+#endif
 	if (ret == 0)
 		dispatch_timer();
 }

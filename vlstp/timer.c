@@ -15,9 +15,7 @@ static inline
 void detach_timer( struct timer_list * timer )
 {
 	struct list_head * entry = &timer->entry;
-	__list_del(entry->prev, entry->next);
-	entry->next	= NULL;
-	entry->prev = LIST_POISON2;
+	list_del_init(&timer->entry );
 }
 
 static inline

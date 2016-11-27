@@ -176,4 +176,5 @@ void vlstp_tsnmap_renege(struct vlstp_tsnmap *, uint32_t tsn);
 
 /* Is there a gap in the TSN map? */
 int vlstp_tsnmap_has_gap(const struct vlstp_tsnmap *);
-#endif
+
+#endif /*__tsnmap_h__*/

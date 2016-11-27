@@ -4,11 +4,63 @@
 #include "vlstp.h"
 #include "bitops.h"
 #include "bitmap.h"
+
+#define LOGI(...) printf(__VA_ARGS__);
+
 struct my_list {
     int id;
     struct list_head list;
     char name[255];
 };
+
+struct objbase
+{
+    vlstp_atomic_t refcnt;
+    void (*destroy)(void *);
+};
+
+static void objbase_init( struct objbase *obj , void (*destroy)(struct objbase *))
+{
+    obj->destroy = destroy;
+    obj->refcnt = 0;
+}
+
+static void objbase_addref( struct objbase * obj )
+{
+    vlstp_atomic_inc(&obj->refcnt);
+}
+static void objbase_release( struct objbase *obj)
+{
+    if ( vlstp_atomic_dec(&obj->refcnt) <= 0) {
+        obj->destroy(obj);
+    }
+}
+
+struct typedobj
+{
+    struct objbase base;
+    char *buf;
+};
+
+static void typedobj_destroy( struct typedobj * obj )
+{
+    LOGI("destroy %s\n", obj->buf);
+    if (obj->buf)
+        free( obj->buf );
+    obj->buf = NULL;
+    free(obj);
+    obj = NULL;
+}
+
+static struct typedobj * typedobj_new()
+{
+    struct typedobj *obj = malloc( sizeof( struct typedobj));
+    objbase_init(&obj->base, typedobj_destroy);
+    obj->buf = malloc( 100 );
+    strcpy(obj->buf, "typedobj obj");
+    return obj;
+}
+
 
 #define get_entry( ptr , TYPE ) \
     (TYPE*)(ptr);
@@ -16,7 +68,7 @@ struct my_list {
 struct timer_list timer[4] ;
 
 void timout_event( unsigned long data ) {
-    printf(" timer %lu timeout %lu\n", data , mtime());
+    LOGI(" timer %lu timeout %lu\n", data , mtime());
 }
 
 #define LIST_NEW_NODE( ptr , node ) \
@@ -75,8 +127,65 @@ void test_linux_list_General()
     if ( list_empty(&head1))
         printf("now the head1 if empty \n");
 }
+struct node {
+    struct node *next;
+    int value;
+};
 
-static void print_bit(unsigned long *addr , unsigned long size )
+static void link_test1()
+{
+    struct node * head = malloc( sizeof(struct node ));
+    head->value = 20;
+    head->next = NULL;
+    for ( int i = 0; i < 20 ; ++i) {
+        struct node **ppev = &head;
+        struct node *current , *new;
+        while ((current = *ppev) != NULL && current->value < i)
+            ppev = &current->next;
+        new = malloc(sizeof(struct node ));
+        new->value = i;
+        new->next = current;
+        *ppev = new;
+    }
+    /*print list and delete */
+    while ( head != NULL ) {
+        struct node * next = head->next;
+        printf("node value :%d\n", head->value );
+        head = next;
+        free(next);
+    }
+}
+
+static void list_test2()
+{
+    struct node * head = malloc( sizeof(struct node ));
+    head->value = 20;
+    head->next = NULL;
+    for ( int i = 0; i < 20 ; ++i) {
+        struct node *ppev = NULL;
+        struct node *current = head, *new;
+        while (current != NULL && current->value < i) {
+            ppev = current;
+            current = current->next;
+        }
+        new = malloc(sizeof(struct node ));
+        new->value = i;
+        new->next = current;
+        if ( ppev == NULL )
+            head = new;
+        else
+            ppev->next = new;
+    }
+    /*print list and delete */
+    while ( head != NULL ) {
+        struct node * next = head->next;
+        printf("list 2 node value :%d\n", head->value );
+        head = next;
+        free(next);
+    }
+}
+
+static void print_bit(unsigned long * addr , unsigned long size )
 {
     char * buf = malloc ( size );
     char * ptr = buf + size - 1;
@@ -87,14 +196,19 @@ static void print_bit(unsigned long *addr , unsigned long size )
         else
             *ptr = 0x30;
     printf("%s\n", buf);
+    free(buf);
 }
+
 int main( int argc , char **argv )
 {
     //test_linux_list_General();
-
+    struct typedobj *obj = NULL;
     unsigned long addr[4], start;
     unsigned long zero_bit;
     memset(addr, 0, sizeof( addr ) );
+
+    link_test1();
+    list_test2();
 
     set_bit(30, addr);
     set_bit(31, addr);
@@ -118,6 +232,11 @@ int main( int argc , char **argv )
 
     printf("tsn_le %d tsn_lte %d now %lu\n", TSN_lt(5, 6) , TSN_lte(5, 6) , mtime());
 
+    LOGI("create typedobj obj \n");
+    obj = typedobj_new();
+    objbase_addref(obj);
+    LOGI("obj name :%s , refcnt %ld\n", obj->buf, obj->base.refcnt);
+    objbase_release(obj);
     for ( int i = 0 ; i < 4 ; ++i ) {
         timer[i].expires = mtime() + (i + 1) * 1000 ;
         setup_timer(&timer[i], timout_event, i);
