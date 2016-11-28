@@ -151,8 +151,8 @@ static void link_test1()
     while ( head != NULL ) {
         struct node * next = head->next;
         printf("node value :%d\n", head->value );
+        free(head);
         head = next;
-        free(next);
     }
 }
 
@@ -180,8 +180,8 @@ static void list_test2()
     while ( head != NULL ) {
         struct node * next = head->next;
         printf("list 2 node value :%d\n", head->value );
+        free(head);
         head = next;
-        free(next);
     }
 }
 
