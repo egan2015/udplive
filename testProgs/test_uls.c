@@ -210,11 +210,11 @@ int main( int argc , char **argv )
     link_test1();
     list_test2();
 
-    set_bit(30, addr);
-    set_bit(31, addr);
-    set_bit(32, addr);
-    set_bit(33, addr);
+    set_bit(60, addr);
+    set_bit(61, addr);
+    set_bit(62, addr);
     set_bit(63, addr);
+    set_bit(64, addr);
 
 #if CONFIG_BIT_PRE_LONG==64
     printf("63%s0\n", "<------------------------------------------------------------");
