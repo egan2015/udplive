@@ -22,7 +22,7 @@ struct objbase
 static void objbase_init( struct objbase *obj , void (*destroy)(struct objbase *))
 {
     obj->destroy = destroy;
-    obj->refcnt = 0;
+    obj->refcnt = 1;
 }
 
 static void objbase_addref( struct objbase * obj )
@@ -199,6 +199,20 @@ static void print_bit(unsigned long * addr , unsigned long size )
     free(buf);
 }
 
+static void pointer_test()
+{
+    int i = 5;
+    int *pi = &i;
+    int **ppi = &pi;
+    printf("i = %d , pi = %d , ppi = %d\n", i , *pi , **ppi  );
+
+    *pi = i + 5;
+    printf("i = %d , pi = %d , ppi = %d\n", i , *pi , **ppi  );
+    **ppi = i + 5;
+    printf("i = %d , pi = %d , ppi = %d\n", i , *pi , **ppi  );
+
+}
+
 int main( int argc , char **argv )
 {
     //test_linux_list_General();
@@ -209,6 +223,7 @@ int main( int argc , char **argv )
 
     link_test1();
     list_test2();
+    pointer_test();
 
     set_bit(60, addr);
     set_bit(61, addr);
@@ -236,6 +251,7 @@ int main( int argc , char **argv )
     obj = typedobj_new();
     objbase_addref(obj);
     LOGI("obj name :%s , refcnt %ld\n", obj->buf, obj->base.refcnt);
+    objbase_release(obj);
     objbase_release(obj);
     for ( int i = 0 ; i < 4 ; ++i ) {
         timer[i].expires = mtime() + (i + 1) * 1000 ;
