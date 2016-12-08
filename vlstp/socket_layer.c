@@ -18,7 +18,8 @@ int fd_select(fdset_t* fdSet, unsigned long ms )
 	if (fdSet) {
 		tv.tv_sec = ( ms / 1000 );
 		tv.tv_usec = ( ms % 1000 ) * 1000;
-		fdSet->numready = select(fdSet->size, &fdSet->fdread, &fdSet->fdwrite, &fdSet->fdexcept, &tv);
+		fdSet->numready = select(fdSet->size, &fdSet->fdread,
+		                         &fdSet->fdwrite, &fdSet->fdexcept, &tv);
 		return fdSet->numready;
 	}
 	return 0;
